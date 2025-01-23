@@ -6,52 +6,56 @@ public class Solution {
 
     public static String digitSum(String s, int k) {
         String groups = "";
+        boolean stringRoundChecked = false;
         int numberOfGroups = (int) Math.ceil((double) s.length() / k);
         String stringRound = s;
+        byte addedGroups = 0;
         int i;
         int l;
         int j;
         for (i = 0; i <= stringRound.length() - 1; i += k) {
             String group = "";
-            if(s.length() == k){
-                return s;
+            String sumString = "";
+            if (stringRound.length() <= k) {
+                return stringRound;
             }
-            var tamannio = groups.length();
-            if (tamannio >= numberOfGroups - 1) {
+            if (addedGroups >= numberOfGroups - 1) {
                 group += stringRound.substring(i, stringRound.length() - 1 + 1);
                 int sum = 0;
                 for (l = 0; l < group.length(); l++) {
-                    sum += Integer.parseInt(String.valueOf(group.charAt(l)));
-                }
-                String sumString = String.valueOf(sum);
-                if (!(sumString.length() < k)) {
-                    for (j = 0; j <= sumString.length() - 1; j += k) {
-                        groups += sumString.substring(j, (j + k));
+                    int currentValue = Integer.parseInt(String.valueOf(group.charAt(l)));
+                    if (currentValue == 0 && (l == group.length() - 1) && group.length() == 1) {
+                        sumString += String.valueOf(currentValue);
+                    } else {
+                        sum += currentValue;
+                        sumString = "";
+                        sumString += String.valueOf(sum);
                     }
-                } else {
-                    groups += sumString;
                 }
+                stringRoundChecked = true;
             } else {
                 group += stringRound.substring(i, (i + k));
                 int sum = 0;
                 for (l = 0; l < group.length(); l++) {
                     sum += Integer.parseInt(String.valueOf(group.charAt(l)));
                 }
-                String sumString = String.valueOf(sum);
-                if (!(sumString.length() < k)) {
-                    for (j = 0; j <= sumString.length() - 1; j += k) {
-                        groups += sumString.substring(j, (j + k));
-                    }
-                } else {
-                    groups += sumString;
-                }
+                sumString = String.valueOf(sum);
             }
-            System.out.println(groups);
-            if (i + k > stringRound.length() && groups.length() > k) {
+            if (!(sumString.length() < k)) {
+                for (j = 0; j <= sumString.length() - 1; j += k) {
+                    groups += sumString.substring(j, (j + k));
+                    addedGroups++;
+                }
+            } else {
+                groups += sumString;
+                addedGroups++;
+            }
+            if (stringRoundChecked) {
                 i = -k;
                 numberOfGroups = (int) Math.ceil((double) groups.length() / k);
-                stringRound = "";
+                stringRoundChecked = false;
                 stringRound = groups;
+                addedGroups = 0;
                 groups = "";
             }
         }
