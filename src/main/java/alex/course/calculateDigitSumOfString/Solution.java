@@ -19,7 +19,6 @@ public class Solution {
             var tamannio = groups.length();
             if (tamannio >= numberOfGroups - 1) {
                 group += stringRound.substring(i, stringRound.length() - 1 + 1);
-                System.out.println(group);
                 int sum = 0;
                 for (l = 0; l < group.length(); l++) {
                     sum += Integer.parseInt(String.valueOf(group.charAt(l)));
@@ -34,7 +33,6 @@ public class Solution {
                 }
             } else {
                 group += stringRound.substring(i, (i + k));
-                System.out.println(group);
                 int sum = 0;
                 for (l = 0; l < group.length(); l++) {
                     sum += Integer.parseInt(String.valueOf(group.charAt(l)));
@@ -48,6 +46,7 @@ public class Solution {
                     groups += sumString;
                 }
             }
+            System.out.println(groups);
             if (i + k > stringRound.length() && groups.length() > k) {
                 i = -k;
                 numberOfGroups = (int) Math.ceil((double) groups.length() / k);
